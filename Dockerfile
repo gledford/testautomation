@@ -3,8 +3,9 @@ FROM centos:centos7
 #Install base OS tools
 RUN yum -y install python3 \
         wget \
-        robotframework \
     && yum clean all && rm -rf /var/cache/yum
+
+RUN pip3 install robotframework
 
 #Setup directories
 RUN mkdir robotframework; \
@@ -16,5 +17,8 @@ RUN mkdir robotframework; \
 RUN wget https://github.com/robotframework/remoteswinglibrary/releases/download/2.2.4/remoteswinglibrary-2.2.4.jar; \
     mv remoteswinglibrary-2.2.4.jar robotframework/resources
 
-#TODO Mount a volume where the tests are located?
-#TODO Mount a volume where the system under test is located
+COPY robot /root/tests
+
+WORKDIR /root/tests
+
+CMD ["robot", "-d", "results", "tests"]
