@@ -5,6 +5,12 @@ This project is a sample for performing test automation using robot framework
 Once the repo is cloned, run the following commands to verify installation:
 
 ````
+cd sut
+
+mvn clean install
+
+cd ../
+
 docker image build -t testautomation:latest .
 
 docker run -v <repo>/robot/results:/root/tests/results --rm testautomation:latest

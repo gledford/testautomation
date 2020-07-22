@@ -3,6 +3,8 @@ FROM centos:centos7
 #Install base OS tools
 RUN yum -y install python3 \
         wget \
+        xterm \
+        java \
     && yum clean all && rm -rf /var/cache/yum
 
 RUN pip3 install robotframework
@@ -18,7 +20,9 @@ RUN wget https://github.com/robotframework/remoteswinglibrary/releases/download/
     mv remoteswinglibrary-2.2.4.jar robotframework/resources
 
 COPY robot /root/tests
+COPY sut/target/app.jar /root/sut/app.jar
 
 WORKDIR /root/tests
 
-CMD ["robot", "-d", "results", "tests"]
+#CMD ["export", "PYTHONPATH=/root/robotframework/resources/remoteswinglibrary-2.2.4.jar"]
+#CMD ["robot", "-d", "results", "tests"]
